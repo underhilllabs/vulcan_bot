@@ -36,12 +36,18 @@ defmodule TelegramBot.Chat do
     {:stop, :normal, :ok, state}
   end
 
-  def handle_message(%Message{text: "/momo"}, %State{chat: chat}) do
+  def handle_message(%Message{text: "/vulcan"}, %State{chat: chat}) do
     API.send_sticker(chat.id, sticker)
   end
-  def handle_message(%Message{text: "/hello", from: user}, %State{chat: chat}) do
-    API.send_message(chat.id, "Greetings, #{user.first_name}")
+  def handle_message(%Message{text: "/need_help"}, %State{chat: chat}) do
+    API.send_message(chat.id, "The needs of the many outweigh the needs of the few")
   end
+  def handle_message(%Message{text: "/hello", from: user}, %State{chat: chat}) do
+    API.send_message(chat.id, "live long and prosper, #{user.first_name}")
+  end
+  #def handle_message(%Message{text: "/pic", from: user}, %State{chat: chat}) do
+  #  API.send_photo(chat.id, "Live long and prosper, #{user.first_name}")
+  #end
   def handle_message(_,_), do: true
 
   defp sticker, do: Application.get_env(:telegram_bot, :sticker_id)
