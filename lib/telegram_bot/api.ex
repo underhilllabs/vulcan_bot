@@ -2,6 +2,7 @@ defmodule TelegramBot.API do
   use HTTPoison.Base
 
   @post_headers %{"Content-type" => "application/x-www-form-urlencoded"}
+  @post_upload_headers %{"Content-type" => "multipart/form-data"}
 
   def process_url(url) do
     "https://api.telegram.org/bot" <> token <> "/" <> url
@@ -21,6 +22,11 @@ defmodule TelegramBot.API do
 
   def send_sticker(chat_id, sticker) do
     post("sendSticker", {:form, [chat_id: chat_id, sticker: sticker]}, @post_headers)
+  end
+
+  def send_photo(chat_id) do 
+    HTTPoison.post("sendPhoto", {:multipart, [{"chat_id", chat_id}, {:file, "/home/bart/Desktop/vulcans/spock_with_cat.jpg"}]}, @post_upload_headers)
+    #HTTPoison.post("sendPhoto", {:file, "/home/bart/Desktop/vulcans/spock_with_cat.jpg"})
   end
 
   def process_response_body(body) do
