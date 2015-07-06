@@ -1,7 +1,6 @@
-TelegramBot - A Telegram Bot written in Elixir
+vulcan_bot - A Telegram Bot written in Elixir
 ==============
 
-![Supervisor tree](tree.png)
 
 How to run:
 -----------
