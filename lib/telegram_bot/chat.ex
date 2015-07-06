@@ -37,7 +37,7 @@ defmodule TelegramBot.Chat do
   end
 
   def handle_message(%Message{text: "/vulcan"}, %State{chat: chat}) do
-    API.send_sticker(chat.id, sticker)
+    API.send_photo(chat.id, "img/tuvok.jpg", "You rang?")
   end
   def handle_message(%Message{text: "/need_help"}, %State{chat: chat}) do
     API.send_message(chat.id, "The needs of the many outweigh the needs of the few")
@@ -47,6 +47,9 @@ defmodule TelegramBot.Chat do
   end
   def handle_message(%Message{text: "/pic"}, %State{chat: chat}) do
     API.send_photo(chat.id)
+  end
+  def handle_message(_, %State{chat: chat}) do
+    API.send_photo(chat.id, "img/spock1.jpg", "You'll have to repeat that, my klingon is a little rusty.")
   end
   def handle_message(_,_), do: true
 

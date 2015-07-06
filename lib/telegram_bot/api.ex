@@ -2,7 +2,8 @@ defmodule TelegramBot.API do
   use HTTPoison.Base
 
   @post_headers %{"Content-type" => "application/x-www-form-urlencoded"}
-  @post_upload_headers %{"Content-type" => "multipart/form-data"}
+  @photos  ["tuvok", "tpol1", "spock1", "spock2", "spock3", "spock4", "spock5", "vulcans1", "tuvok2"]
+  # @post_upload_headers %{"Content-type" => "multipart/form-data"}
 
   def process_url(url) do
     "https://api.telegram.org/bot" <> token <> "/" <> url
@@ -24,12 +25,16 @@ defmodule TelegramBot.API do
     post("sendSticker", {:form, [chat_id: chat_id, sticker: sticker]}, @post_headers)
   end
 
-  def send_photo(chat_id) do 
-    HTTPoison.post("sendPhoto", {:multipart, [{"chat_id", chat_id}, {:file, "/home/bart/Desktop/vulcans/spock_with_cat.jpg"}]}, @post_upload_headers)
-    #HTTPoison.post("sendPhoto", {:file, "/home/bart/Desktop/vulcans/spock_with_cat.jpg"})
+  def send_photo(chat_id, filename \\ "fake", caption \\ "Tick tock, Tuvok") do 
+    filename = "img/"<>sample_pic(@photos)<>".jpg"
+    post("sendPhoto", {:multipart, [{"chat_id", Integer.to_string(chat_id)}, {"caption", caption}, {:file, filename,{"form-data", [{"filename", filename},{"name", "photo"}]}, [{"Content-Type", "image/jpeg"}] }]})
   end
 
   def process_response_body(body) do
     body |> Poison.decode!
+  end
+
+  def sample_pic(photos) do
+    Enum.shuffle(photos) |> List.first
   end
 end
