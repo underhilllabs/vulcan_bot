@@ -1,5 +1,4 @@
-VulcanBot - A Telegram Bot written in Elixir
-==============
+## VulcanBot - A Telegram Bot written in Elixir
 
 How to run:
 -----------
